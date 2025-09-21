@@ -22,6 +22,16 @@
 
 /* USER CODE BEGIN 0 */
 
+#include <stdio.h>
+#include <string.h>
+
+#define UART_TX_BUFFER_SIZE 256
+
+static uint8_t UART_TxBuffer[UART_TX_BUFFER_SIZE];
+static volatile uint16_t UART_TxHead = 0;
+static volatile uint16_t UART_TxTail = 0;
+static volatile uint8_t UART_TxBusy = 0;
+
 /* USER CODE END 0 */
 
 UART_HandleTypeDef huart2;
@@ -39,7 +49,7 @@ void MX_USART2_UART_Init(void)
 
   /* USER CODE END USART2_Init 1 */
   huart2.Instance = USART2;
-  huart2.Init.BaudRate = 115200;
+  huart2.Init.BaudRate = 921600;
   huart2.Init.WordLength = UART_WORDLENGTH_8B;
   huart2.Init.StopBits = UART_STOPBITS_1;
   huart2.Init.Parity = UART_PARITY_NONE;
@@ -136,5 +146,25 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 }
 
 /* USER CODE BEGIN 1 */
+
+// 针对不同编译器，需要不同的底层函数名
+#if defined(__GNUC__)
+// GCC 使用
+
+// 针对不同编译器，需要不同的底层函数名
+int _write(int fd, char *ptr, int len)
+{
+    HAL_UART_Transmit(&huart2, (uint8_t*)ptr, len, HAL_MAX_DELAY);  // 阻塞发送
+    return len;
+}
+
+#else
+// Keil / IAR 使用
+int fputc(int ch, FILE *f)
+{
+    HAL_UART_Transmit(&huart1, (uint8_t *)&ch, 1, HAL_MAX_DELAY);
+    return ch;
+}
+#endif
 
 /* USER CODE END 1 */

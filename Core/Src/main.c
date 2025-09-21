@@ -24,7 +24,9 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "stdio.h"
+#include "Myfoc.h"
+#include "math.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -91,7 +93,7 @@ int main(void)
   MX_TIM6_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-
+  HAL_TIM_Base_Start_IT(&htim6);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -102,9 +104,13 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-	  char message[] = "Hello, STM32 G4 !\r\n";
-	  HAL_UART_Transmit(&huart2, (uint8_t*)message, strlen(message), HAL_MAX_DELAY);
-	  HAL_Delay(1000); // 每秒发送一次
+	  // char message[] = "Hello, STM32 G4 !\r\n";
+	  // HAL_UART_Transmit(&huart2, (uint8_t*)message, strlen(message), HAL_MAX_DELAY);
+	  // HAL_Delay(1000); // 每秒发送一次
+    printf("%f,%f,%f,%f,%f,%f\n",Motor.Ualpha, Motor.Ubata, Motor.Ua, Motor.Ub, Motor.Uc, Motor.theta);
+//	  float message[8] = {Motor.Ualpha, Motor.Ubata, Motor.Ua, Motor.Ub, Motor.Uc, 0, 0, 0};
+//	  HAL_UART_Transmit(&huart2, message, 8, HAL_MAX_DELAY);
+	  HAL_Delay(1); // 十毫秒显示
 
 	  // TIM6 为 10K电流环
   }
