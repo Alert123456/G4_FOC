@@ -8,6 +8,8 @@
 #ifndef INC_MYFOC_H_
 #define INC_MYFOC_H_
 
+#include "main.h"
+
 #define M_PI 3.14159265358979f
 
 typedef struct
@@ -29,6 +31,7 @@ typedef struct
 
 // Extern
 extern MotorPara Motor;
+extern uint16_t Timer6_UartCounter;
 // Func
 extern void Theta_Generate(MotorPara *m_Motor);
 extern void Foc_Test(MotorPara *m_Motor);

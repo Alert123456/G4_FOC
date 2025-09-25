@@ -106,7 +106,11 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-
+	  if(Timer6_UartCounter >= 10)
+	  {
+		  UART_Send();
+		  Timer6_UartCounter = 0;
+	  }
 
 
 	  // TIM6 为 10K电流环

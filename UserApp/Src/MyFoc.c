@@ -29,7 +29,7 @@ void Clark(MotorPara *m_Motor)
 {
 	m_Motor->Ic = -(m_Motor->Ia + m_Motor->Ib);
 	m_Motor->Ialpha = m_Motor->Ia;
-	m_Motor->Ibata = (m_Motor->Ia + 2*m_Motor->Ib)/sqrt(3);
+	m_Motor->Ibata = (m_Motor->Ia + 2*m_Motor->Ib)/sqrtf(3);
 }
 
 /*
@@ -39,8 +39,8 @@ void Clark(MotorPara *m_Motor)
  */
 void Park(MotorPara *m_Motor)
 {
-	m_Motor->Id = m_Motor->Ialpha*cos(m_Motor->theta) + m_Motor->Ibata*sin(m_Motor->theta);
-	m_Motor->Iq = -m_Motor->Ialpha*sin(m_Motor->theta) + m_Motor->Ibata*cos(m_Motor->theta);
+	m_Motor->Id = m_Motor->Ialpha*cosf(m_Motor->theta) + m_Motor->Ibata*sinf(m_Motor->theta);
+	m_Motor->Iq = -m_Motor->Ialpha*sinf(m_Motor->theta) + m_Motor->Ibata*cosf(m_Motor->theta);
 }
 
 /*
@@ -50,8 +50,8 @@ void Park(MotorPara *m_Motor)
  */
 void InvPark(MotorPara *m_Motor)
 {
-	m_Motor->Ualpha = m_Motor->Ud*cos(m_Motor->theta) - m_Motor->Uq*sin(m_Motor->theta);
-	m_Motor->Ubata = m_Motor->Ud*sin(m_Motor->theta) + m_Motor->Uq*cos(m_Motor->theta);
+	m_Motor->Ualpha = m_Motor->Ud*cosf(m_Motor->theta) - m_Motor->Uq*sinf(m_Motor->theta);
+	m_Motor->Ubata = m_Motor->Ud*sinf(m_Motor->theta) + m_Motor->Uq*cosf(m_Motor->theta);
 }
 
 /*
@@ -62,8 +62,8 @@ void InvPark(MotorPara *m_Motor)
 void InvClark(MotorPara *m_Motor)
 {
 	m_Motor->Ua = m_Motor->Ualpha;
-	m_Motor->Ub = -0.5*m_Motor->Ualpha + sqrt(3)*0.5*m_Motor->Ubata;
-	m_Motor->Uc = -0.5*m_Motor->Ualpha - sqrt(3)*0.5*m_Motor->Ubata;
+	m_Motor->Ub = -0.5*m_Motor->Ualpha + sqrtf(3)*0.5*m_Motor->Ubata;
+	m_Motor->Uc = -0.5*m_Motor->Ualpha - sqrtf(3)*0.5*m_Motor->Ubata;
 }
 
 void Theta_Generate(MotorPara *m_Motor)

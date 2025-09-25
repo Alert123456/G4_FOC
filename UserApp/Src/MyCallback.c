@@ -10,13 +10,14 @@
 
 // value
 static uint16_t Timer6_Counter = 0;
+uint16_t Timer6_UartCounter = 0;
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
     if (htim->Instance == TIM6)   // 判断是哪个定时器 // 10K
     {
     	Foc_Test(&Motor); // 坐标变换验证
-    	if(Timer6_Counter >= 100) // 10ms
+    	if(Timer6_Counter >= 10) // 10ms
     	{
     		Theta_Generate(&Motor); // 产生Theta
 
@@ -24,6 +25,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     	}
 
         Timer6_Counter++;
+        Timer6_UartCounter++;
     }
 }
 
