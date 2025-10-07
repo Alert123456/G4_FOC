@@ -10,6 +10,7 @@
 
 // value
 static uint16_t Timer6_Counter = 0;
+uint16_t Timer6_Nums = 0;
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
@@ -24,6 +25,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     	}
 
         Timer6_Counter++;
+        Timer6_Nums++;
     }
 }
 

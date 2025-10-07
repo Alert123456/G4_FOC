@@ -32,7 +32,7 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-
+extern uint16_t Timer6_Nums;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -48,9 +48,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-// 在main.c的main函数之前定义变量
-uint16_t adc_value;
-float voltage;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -113,28 +111,17 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  // 启动ADC转换
-	    HAL_ADC_Start(&hadc1);
-	    // 等待转换完成，超时时间设为10ms
-	    if (HAL_ADC_PollForConversion(&hadc1, 10) == HAL_OK)
-	    {
-	      // 读取ADC转换值
-	      adc_value = HAL_ADC_GetValue(&hadc1);
-	      // 将ADC值转换为电压值 (假设参考电压为3.3V)
-	      voltage = (float)adc_value * 75.0 * 3.3 / 4095.0 / 3.0;
-	      // 此处可以通过串口打印电压值，或进行其他处理
-	      // printf("ADC Value: %d, Voltage: %.2f V\r\n", adc_value, voltage);
-	    }
-	    HAL_Delay(500); // 延时500ms
-	    HAL_ADC_Stop(&hadc1);
-    /* USER CODE END WHILE */
-
-    /* USER CODE BEGIN 3 */
-
-
-
-
 	  // TIM6 为 10K电流环
+	  if(Timer6_Nums >= 100) // 10ms
+	  {
+		  UART_Send();
+		  Vbus_Sense(&Motor); // 母线电压读取
+
+		  Timer6_Nums = 0;
+	  }
+
+    /* USER CODE END WHILE */
+    /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
 }
