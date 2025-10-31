@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "adc.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
@@ -36,7 +37,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+float v;
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -58,7 +59,26 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+// 读取ADC原始值
+uint32_t Read_ADC(void)
+{
+    uint32_t value = 0;
 
+    HAL_ADC_Start(&hadc1);                                // 启动ADC
+    HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY);     // 等待转换完成
+    value = HAL_ADC_GetValue(&hadc1);                     // 读值
+    HAL_ADC_Stop(&hadc1);                                 // 停止ADC
+
+    return value;
+}
+
+// 转换为电压
+float Get_Voltage(void)
+{
+    uint32_t adc_val = Read_ADC();
+    float voltage = (float)adc_val * VBUS_CONVERSION_FACTOR;      // 12位，Vref=3.3V
+    return voltage;
+}
 /* USER CODE END 0 */
 
 /**
@@ -92,9 +112,10 @@ int main(void)
   MX_GPIO_Init();
   MX_TIM6_Init();
   MX_USART2_UART_Init();
+  MX_ADC1_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&htim6);
-
+//  HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&adc_dma_value, 1);
 
   /* USER CODE END 2 */
 
@@ -111,7 +132,9 @@ int main(void)
 		  UART_Send();
 		  Timer6_UartCounter = 0;
 	  }
-
+//	  uint32_t adc_raw = HAL_ADC_GetValue(&hadc1);
+	   v = Get_Voltage();
+	  HAL_Delay(500);
 
 	  // TIM6 为 10K电流环
   }

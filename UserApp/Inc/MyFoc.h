@@ -9,8 +9,7 @@
 #define INC_MYFOC_H_
 
 #include "main.h"
-
-#define M_PI 3.14159265358979f
+#include "board.h"
 
 typedef struct
 {
@@ -27,11 +26,17 @@ typedef struct
 	float Ua,Ub,Uc; // 三项电压
 
 	float theta; // alpha 与 d 轴夹角
+
+	float Ta,Tb,Tc; // SVPWM作用时间
+	uint8_t Sector;	// 扇区
+	float Tpwm;	// pwm作用时间
+	float Udc;	// DC电压
 }MotorPara;
 
 // Extern
 extern MotorPara Motor;
 extern uint16_t Timer6_UartCounter;
+extern uint32_t adc_dma_value;
 // Func
 extern void Theta_Generate(MotorPara *m_Motor);
 extern void Foc_Test(MotorPara *m_Motor);
