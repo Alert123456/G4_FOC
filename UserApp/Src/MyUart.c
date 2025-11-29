@@ -27,6 +27,9 @@ void UART_Send()
 	ch[6] = Motor.sector;
 	ch[7] = Motor.Ualpha;
 	ch[8] = Motor.Ubata;
+	ch[9] = Motor.res1;
+	ch[10] = Motor.res2;
+	ch[11] = Motor.res3;
 
 	// 方法2：直接使用指针转换发送（更简洁）
 	HAL_UART_Transmit(&huart2, (uint8_t*)ch, sizeof(float) * 16, HAL_MAX_DELAY);

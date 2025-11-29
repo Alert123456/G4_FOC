@@ -14,7 +14,7 @@ uint16_t Timer6_Nums = 0;
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-    if (htim->Instance == TIM6)   // 判断是哪个定时器 // 10K
+    if (htim->Instance == TIM1)   // 判断是哪个定时器 // 10K
     {
     	Foc_Test(&Motor); // 坐标变换验证
     	if(Timer6_Counter >= 100) // 10ms

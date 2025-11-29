@@ -33,10 +33,18 @@ typedef struct
 	float Ta,Tb,Tc; // 三相占空比
 	uint8_t sector; // 扇区
 	float Tpwm;  // pwm周期
+
+	uint8_t res1, res2, res3;
 }MotorPara;
+
+typedef struct
+{
+	uint8_t MotorOpRun;
+}MotorCtrl;
 
 // Extern
 extern MotorPara Motor;
+extern MotorCtrl MotorCr;
 extern uint32_t Udc_adc;
 // Func
 extern void Theta_Generate(MotorPara *m_Motor);

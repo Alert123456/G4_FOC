@@ -13,6 +13,7 @@
 
 // Value
 MotorPara Motor;
+MotorCtrl MotorCr;
 uint32_t Udc_adc = 0;
 // Func
 
@@ -226,5 +227,26 @@ void Foc_Test(MotorPara *m_Motor)
 	InvPark(m_Motor); // dq -> alpha/bata
 //	InvClark(m_Motor);	// alpha/bata -> abc
 	SVPWM(m_Motor);
+	if(MotorCr.MotorOpRun == 1)
+	{
+		TIM1->CCR1 = (uint16_t)m_Motor->Ta;	// 将计数器与Tcmp比较，产生PWM波
+		TIM1->CCR2 = (uint16_t)m_Motor->Tb;
+		TIM1->CCR3 = (uint16_t)m_Motor->Tc;
+//		if(TIM1->CNT < TIM1->CCR1 )
+//			m_Motor->res1 = 1;
+//		else
+//			m_Motor->res1 = 0;
+//
+//		if(TIM1->CNT < TIM1->CCR2 )
+//			m_Motor->res2 = 1;
+//		else
+//			m_Motor->res2 = 0;
+//
+//		if(TIM1->CNT < TIM1->CCR3 )
+//			m_Motor->res3 = 1;
+//		else
+//			m_Motor->res3 = 0;
+
+	}
 }
 // End of file

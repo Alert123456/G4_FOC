@@ -91,12 +91,12 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_TIM6_Init();
   MX_USART2_UART_Init();
   MX_ADC1_Init();
+  MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
 
-  HAL_TIM_Base_Start_IT(&htim6);
+  HAL_TIM_Base_Start_IT(&htim1);
 
   // 在main函数的初始化部分之后（/* USER CODE BEGIN 2 */ 之后）
   // 可以首先执行ADC校准:cite[9]:cite[10]
@@ -121,6 +121,7 @@ int main(void)
 	  }
 
     /* USER CODE END WHILE */
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
